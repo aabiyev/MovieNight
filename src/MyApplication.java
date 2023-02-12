@@ -129,6 +129,37 @@ public class MyApplication {
     public void buyTicket(){
         System.out.println("Please input movie's id");
         int id = scanner.nextInt();
+        System.out.println("Please input date (12/02/2023");
+        String date = scanner.next();
+        if(date.length()!=10) {
+            System.out.println("Incorrect date");
+            forClient();
+        }
+        else {
+            int day = Integer.parseInt(date.substring(0, 2));
+            int month = Integer.parseInt((date.substring(3,5)));
+            int year = Integer.parseInt(date.substring(6,9));
+            DateExist(day,month,year);
+        }
+        System.out.println("""
+Please input movie session
+  10:30
+  12:40
+  14:50
+  17:00
+  19:10
+""");
+        String time = scanner.next();
+        if(time.length() != 5) {
+            System.out.println("Incorrect time");
+            forClient();
+        }
+        else {
+            int hour = Integer.parseInt(time.substring(0,2));
+            int minute = Integer.parseInt(time.substring(3,5));
+            TimeExist(hour,minute);
+            ;
+        }
         System.out.println(con.buyTicket(id));
         forClient();
     }
@@ -188,4 +219,57 @@ public class MyApplication {
         }
         System.out.println(response);
     }
+    public boolean TimeExist(int hour, int minute){
+        return (hour <= 24 && hour >= 0) && (minute <= 59 && minute >= 0);
+    }
+
+    public boolean DateExist(int day, int month, int year){
+        if(day<=0 || month <= 0 || year <= 0) return false;
+        int feb = 28 ;
+        if(year%4==0){
+            if(!(year%100 == 0)){
+                feb=29;
+            } else if (year%400==0) {
+                feb=29;
+            }
+        }
+
+        switch (month){
+            case 1:
+                if(day<=31){
+                    return true;
+                }
+            case 2:
+                if (day<=feb){
+                    return true;
+                }
+            case 3:
+                if (day <= 31) return true;
+            case 4:
+                if (day <= 30) return true;
+
+            case 5:
+                if (day <= 31) return true;
+
+            case 6:
+                if (day <= 30) return true;
+            case 7:
+                if (day <= 31) return true;
+            case 8:
+                if (day <= 31) return true;
+            case 9:
+                if (day <= 30) return true;
+            case 10:
+                if (day <= 31) return true;
+            case 11:
+                if (day <= 30) return true;
+
+            case 12:
+                if (day <= 31) return true;
+        }
+
+
+        return false;
+    }
 }
+
