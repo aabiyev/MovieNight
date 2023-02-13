@@ -53,6 +53,7 @@ public class UserRepository implements IUserRepository {
                 System.out.println("Please enter ADMIN or CLIENT");
                 String str = in.next();
                 createUser(users, str);
+                created = true;
             }
 
         }
