@@ -13,7 +13,7 @@ public class ClientController{
     }
     public String returnTicket(){
         boolean retrn = rep.returnTicket();
-        return (retrn ? "Ticked returned" : "Returning is failed");
+        return (retrn ? "Ticked returned" : "Returning is failed !");
     }
     public void Myaccount(){
         rep.MyAccount();
