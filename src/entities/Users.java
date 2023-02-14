@@ -7,6 +7,7 @@ public class Users {
     private String name;
     private String password;
     private String role;
+    private int age;
     private double balance = 0;
     public Users(int id, String name,String password, String role) throws InncorrectPassword {
         isRightPassword(password);
@@ -15,12 +16,19 @@ public class Users {
         setPassword(password);
         setRole(role);
     }
-    public Users(String name,String password, String role,double balance) throws InncorrectPassword{
+    public Users(String name,String password,String role) throws InncorrectPassword {
+        isRightPassword(password);
+        setName(name);
+        setPassword(password);
+        setRole(role);
+    }
+    public Users(String name,String password, String role,double balance,int age) throws InncorrectPassword{
         isRightPassword(password);
         setName(name);
         setPassword(password);
         setRole(role);
         setBalance(balance);
+        setAge(age);
     }
     public Users(int id,String name, String role){
         setId(id);
@@ -66,6 +74,14 @@ public class Users {
         this.balance = balance;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public void isRightPassword(String password) throws InncorrectPassword {
         char[] pas = password.toCharArray();
         int n = password.length();
@@ -87,6 +103,6 @@ public class Users {
     }
     @Override
     public String toString() {
-        return "id = "+ id + "name = " + name + "role = "+ role+'\n';
+        return "id = "+ id + ", name = " + name + ", role = "+ role+'\n';
     }
 }

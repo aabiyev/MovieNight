@@ -8,4 +8,5 @@ public interface IMovieRepository {
     List<Movie> allMovie();
     boolean UpdateMovie(int id);
     boolean DeleteMovie(int id);
+    boolean DeleteUser(int id);
 }

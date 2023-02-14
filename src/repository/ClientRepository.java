@@ -121,5 +121,8 @@ public class ClientRepository implements IClientRepository {
             }
         }
     }
+    public void incBalance(){
+        System.out.println("");
+    }
 
 }

@@ -1,6 +1,4 @@
 package controller;
-import entities.Admin;
-import entities.Client;
 import entities.Users;
 import repository.interfaces.IUserRepository;
 
@@ -15,13 +13,13 @@ public class UserController {
     }
 
     public String createUsers(String name,String password, String role) throws Exception {
-        Users users = new Admin(name, password);
+        Users users = new Users(name, password, role);
         currentUser = users;
         boolean created = repo.createUser(users,role);
         return (created ? "Admin was created!" : "Admin creation was failed!");
     }
-    public String createUsers(String name,String password, String role, double balance) throws Exception {
-        Users users = new Client(name, password,balance);
+    public String createUsers(String name,String password, String role, double balance, int age) throws Exception {
+        Users users = new Users(name, password,role,balance,age);
         currentUser = users;
         boolean created = repo.createUser(users,role);
         return (created ? "Client was created!" : "Client creation was failed!");

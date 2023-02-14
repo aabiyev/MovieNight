@@ -23,8 +23,12 @@ public class AdminController {
         boolean created = repo.DeleteMovie(id);
         return (created ? "Movie which id is " +id +" was successfully deleted " : "Movie delete was failed");
     }
-    public String allMovie(){
+    public List<Movie> allMovie(){
         List<Movie> movie = repo.allMovie();
-        return movie.toString();
+        return movie;
+    }
+    public String DeleteUsers(int id){
+        boolean deleted = repo.DeleteUser(id);
+        return (deleted ? "User deleted" : "Something went wrong");
     }
 }

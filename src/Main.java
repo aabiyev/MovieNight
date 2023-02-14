@@ -13,13 +13,13 @@ import repository.interfaces.IUserRepository;
 public class Main {
     public static void main(String[] args) throws Exception {
         IDB db = new PostgresDB();
-        IUserRepository repo = new UserRepository(db);
-        IMovieRepository rep = new AdminRepository(db);
-        IClientRepository repoo = new ClientRepository(db);
-        UserController controller = new UserController(repo);
-        AdminController cont  = new AdminController(rep);
-        ClientController con = new ClientController(repoo);
-        MyApplication app = new MyApplication(controller,cont, con);
+        IUserRepository userRepository = new UserRepository(db);
+        IMovieRepository adminRepository = new AdminRepository(db);
+        IClientRepository clientRepository = new ClientRepository(db);
+        UserController userController = new UserController(userRepository);
+        AdminController adminController  = new AdminController(adminRepository);
+        ClientController clientController = new ClientController(clientRepository);
+        MyApplication app = new MyApplication(userController,adminController, clientController);
         app.start();
     }
 }

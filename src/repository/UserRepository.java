@@ -1,7 +1,5 @@
 package repository;
 import data.interfaces.IDB;
-import entities.Admin;
-import entities.Client;
 import entities.Users;
 import repository.interfaces.IUserRepository;
 
@@ -73,13 +71,13 @@ public class UserRepository implements IUserRepository {
                   if((rs.getString("name").equals(name)&& rs.getString("password").equals(password))){
                      if(rs.getString("role").equals("admin")){
                          try{
-                             user = new Admin(rs.getString("name"), rs.getString("password"));
+                             user = new Users(rs.getString("name"), rs.getString("password"),rs.getString("role"));
                          } catch (Exception e) {
                              e.printStackTrace();
                          }
                      } else if (rs.getString("role").equals("client")) {
                       try {
-                             user = new Client( rs.getString("name"), rs.getString("password"), rs.getDouble("balance"));
+                             user = new Users( rs.getString("name"), rs.getString("password"),rs.getString("role"), rs.getDouble("balance"),rs.getInt("age"));
                          } catch (Exception e) {
                           e.printStackTrace();
                       }

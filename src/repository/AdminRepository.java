@@ -23,18 +23,17 @@ public class AdminRepository implements IMovieRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO movies (movie, movie_about, price) VALUES (?,?,?)";
+            String sql = "INSERT INTO movies (movie, movie_about, price, price_forChildren,3D) VALUES (?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, movie.getMovie());
             st.setString(2, movie.getMovie_about());
             st.setDouble(3, movie.getPrice());
-
+            st.setDouble(4,movie.getPriceForChildren());
+            st.setBoolean(5,movie.isDdd());
             st.execute();
             return true;
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } finally {
             try {
                 con.close();
@@ -54,16 +53,14 @@ public class AdminRepository implements IMovieRepository {
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(sql);
-            List<Movie> movies = new LinkedList<Movie>();
+            List<Movie> movies = new LinkedList<>();
             while (rs.next()) {
-                Movie movie = new Movie(rs.getInt("id"), rs.getString("movie"), rs.getString("movie_about"), rs.getDouble("price"));
+                Movie movie = new Movie(rs.getInt("id"), rs.getString("movie"), rs.getString("movie_about"), rs.getDouble("price"), rs.getDouble("price_forChildren"),rs.getBoolean("3D"));
                 movies.add(movie);
             }
             return movies;
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } finally {
             try {
                 con.close();
@@ -127,4 +124,30 @@ public class AdminRepository implements IMovieRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean DeleteUser(int id) {
+        Connection con = null;
+        try{
+            con = db.getConnection();
+
+            PreparedStatement st = con.prepareStatement("DELETE FROM movie_users WHERE id=(?)");
+            st.setInt(1,id);
+
+            st.execute();
+            return true;
+        }  catch (SQLException throwables) {
+        throwables.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+        return false;
+    }
+
 }
