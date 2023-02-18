@@ -1,29 +1,18 @@
 package entities;
 
-import Exeptions.InncorrectPassword;
-
 public class Users {
-    private int id;
+    private int id = 0;
     private String name;
     private String password;
     private String role;
     private int age;
     private double balance = 0;
-    public Users(int id, String name,String password, String role) throws InncorrectPassword {
-        isRightPassword(password);
-        setId(id);
+    public Users(String name,String password,String role)  {
         setName(name);
         setPassword(password);
         setRole(role);
     }
-    public Users(String name,String password,String role) throws InncorrectPassword {
-        isRightPassword(password);
-        setName(name);
-        setPassword(password);
-        setRole(role);
-    }
-    public Users(String name,String password, String role,double balance,int age) throws InncorrectPassword{
-        isRightPassword(password);
+    public Users(String name,String password, String role,double balance,int age){
         setName(name);
         setPassword(password);
         setRole(role);
@@ -82,25 +71,6 @@ public class Users {
         this.age = age;
     }
 
-    public void isRightPassword(String password) throws InncorrectPassword {
-        char[] pas = password.toCharArray();
-        int n = password.length();
-        int cnt = 0;
-        for (int i = 0; i < n; i++) {
-            if((pas[i]>='A' && pas[i]<='Z') || (pas[i]>='a' && pas[i] <='z') ){
-                cnt++;
-            }
-            if(pas[i] >='0' && pas[i]<='9'){
-                cnt++;
-            }
-        }
-        if(n>0 && n<8){
-            throw new InncorrectPassword("Your password should contain at least 8 digits");
-        }
-        if(n != cnt){
-            throw new InncorrectPassword("Your password should contain only numbers and character");
-        }
-    }
     @Override
     public String toString() {
         return "id = "+ id + ", name = " + name + ", role = "+ role+'\n';

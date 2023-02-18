@@ -23,13 +23,14 @@ public class AdminRepository implements IMovieRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO movies (movie, movie_about, price, price_forChildren,3D) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO movies (movie, movie_about, price, children, genre, rating ) VALUES (?,?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, movie.getMovie());
             st.setString(2, movie.getMovie_about());
             st.setDouble(3, movie.getPrice());
             st.setDouble(4,movie.getPriceForChildren());
-            st.setBoolean(5,movie.isDdd());
+            st.setString(5,movie.getGenre());
+            st.setInt(6, movie.getRating());
             st.execute();
             return true;
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -55,7 +56,7 @@ public class AdminRepository implements IMovieRepository {
             ResultSet rs = st.executeQuery(sql);
             List<Movie> movies = new LinkedList<>();
             while (rs.next()) {
-                Movie movie = new Movie(rs.getInt("id"), rs.getString("movie"), rs.getString("movie_about"), rs.getDouble("price"), rs.getDouble("price_forChildren"),rs.getBoolean("3D"));
+                Movie movie = new Movie(rs.getInt("id"), rs.getString("movie"), rs.getString("movie_about"), rs.getDouble("price"), rs.getDouble("children"), rs.getInt("rating"), rs.getString("genre"));
                 movies.add(movie);
             }
             return movies;
@@ -76,12 +77,15 @@ public class AdminRepository implements IMovieRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            System.out.println("Please input new data");
+            System.out.println("Please input new price");
             double neww = in.nextDouble();
-            String sql = " UPDATE movies SET price = (?) WHERE id = (?) ";
+            System.out.println("Please input new price for children");
+            double children = in.nextDouble();
+            String sql = " UPDATE movies SET price = (?),children = (?) WHERE id = (?) ";
             PreparedStatement st = con.prepareStatement(sql);
             st.setDouble(1, neww);
-            st.setInt(2, id);
+            st.setDouble(2,children);
+            st.setInt(3, id);
 
             st.execute();
             return true;
@@ -130,10 +134,8 @@ public class AdminRepository implements IMovieRepository {
         Connection con = null;
         try{
             con = db.getConnection();
-
             PreparedStatement st = con.prepareStatement("DELETE FROM movie_users WHERE id=(?)");
             st.setInt(1,id);
-
             st.execute();
             return true;
         }  catch (SQLException throwables) {

@@ -3,23 +3,26 @@ public class Movie {
     private int id;
     private String movie;
     private String movie_about;
+    private String genre;
+    private int rating;
     private double price;
     private double priceForChildren;
-    private boolean ddd;
-    public Movie(int id, String movie, String movie_about, double price, double priceForChildren,boolean ddd) {
+    public Movie(int id, String movie, String movie_about, double price, double priceForChildren, int rating, String genre) {
         this.id = id;
         this.movie = movie;
         this.movie_about = movie_about;
         this.price = price;
         setPriceForChildren(priceForChildren);
-        setDdd(ddd);
+        setRating(rating);
+        setGenre(genre);
     }
-    public Movie( String movie, String movie_about, double price, double priceForChildren,boolean ddd) {
+    public Movie( String movie, String movie_about, double price, double priceForChildren, int rating, String genre) {
         this.movie = movie;
         this.movie_about = movie_about;
         this.price = price;
         setPriceForChildren(priceForChildren);
-        setDdd(ddd);
+        setRating(rating);
+        setGenre(genre);
     }
     public int getId() {
         return id;
@@ -60,12 +63,20 @@ public class Movie {
         this.price = price;
     }
 
-    public boolean isDdd() {
-        return ddd;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setDdd(boolean ddd) {
-        this.ddd = ddd;
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override
@@ -74,9 +85,10 @@ public class Movie {
                 "id=" + id +
                 ", movie='" + movie + '\'' +
                 ", movie_about='" + movie_about + '\'' +
-                ", price=" + price +
-                ", price for children=" + priceForChildren +
-                ", is 3d=" + ddd+
+                ", genre='" + genre + '\'' +
+                ", rating=" + rating +
+                "+, price=" + price +
+                ", priceForChildren=" + priceForChildren +
                 '}'+'\n';
     }
 }

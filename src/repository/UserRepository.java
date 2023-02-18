@@ -38,7 +38,10 @@ public class UserRepository implements IUserRepository {
                     int choice = in.nextInt();
                     switch (choice) {
                         case 1 -> createUser(users, "admin");
-                        case 2 -> createUser(users, "client");
+                        case 2 -> {
+                            create(users, "client");
+                            created = true;
+                        }
                         default -> exit(0);
                     }
                 }
@@ -52,6 +55,7 @@ public class UserRepository implements IUserRepository {
                 String str = in.next();
                 createUser(users, str);
                 created = true;
+                break;
             }
 
         }
@@ -136,13 +140,14 @@ public class UserRepository implements IUserRepository {
         String sql;
         try {
             con = db.getConnection();
-            sql = "INSERT INTO movie_users(name, password, role, balance) VALUES (?,?,?,?)";
+            sql = "INSERT INTO movie_users(name, password, role, balance, age) VALUES (?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
 
             st.setString(1, users.getName());
             st.setString(2, users.getPassword());
             st.setString(3, role);
             st.setDouble(4, users.getBalance());
+            st.setInt(5,users.getAge());
 
             st.execute();
         } catch (SQLException throwables) {

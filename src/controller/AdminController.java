@@ -24,11 +24,11 @@ public class AdminController {
         return (created ? "Movie which id is " +id +" was successfully deleted " : "Movie delete was failed");
     }
     public List<Movie> allMovie(){
-        List<Movie> movie = repo.allMovie();
-        return movie;
+        return repo.allMovie();
     }
     public String DeleteUsers(int id){
         boolean deleted = repo.DeleteUser(id);
+        UserController.currentUser = null;
         return (deleted ? "User deleted" : "Something went wrong");
     }
 }
