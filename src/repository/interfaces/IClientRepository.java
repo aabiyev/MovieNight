@@ -5,4 +5,5 @@ public interface IClientRepository {
     boolean returnTicket();
     void MyAccount();
     void incBalance();
+    boolean idExits(int id);
 }

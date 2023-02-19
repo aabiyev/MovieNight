@@ -11,7 +11,6 @@ import static java.lang.System.exit;
 public class ClientRepository implements IClientRepository {
     private final IDB db;
     private static Scanner in = new Scanner(System.in);
-
     public ClientRepository(IDB db) {
         this.db = db;
     }
@@ -27,40 +26,44 @@ public class ClientRepository implements IClientRepository {
             double newBalance = 0;
             while(rs.next()){
                 try{
-                if(id == rs.getInt("id")){
-                  if(UserController.currentUser.getAge()>=rs.getInt("rating"))  {
-                        newBalance = UserController.currentUser.getBalance() - rs.getDouble("price");
-                        if (newBalance < 0) {
-                            System.out.println("""
-                                    You don't have enough funds
-                                    1. Replenish the balance
-                                    0. Exit""");
-                            int choice = in.nextInt();
-                            switch (choice) {
-                                case 1 -> {
-                                    incBalance();
-                                    buyTicket(id);
-                                }
-                                case 2 -> exit(0);
+                if(id == rs.getInt("id")) {
+                    if (UserController.currentUser.getAge() >= rs.getInt("rating")) {
+                        if (UserController.currentUser.getAge() >= 18) {
+                            newBalance = UserController.currentUser.getBalance() - rs.getDouble("price");
+                        }
+                    } else {
+                        newBalance = UserController.currentUser.getBalance() - rs.getDouble("children");
+                    }
+                    if(newBalance < 0) {
+                        System.out.println("""
+                                      You don't have enough funds
+                                      1. Replenish the balance
+                                      0. Exit""");
+                        int choice = in.nextInt();
+                        switch (choice) {
+                            case 1 -> {
+                                incBalance();
+                                buyTicket(id);
                             }
-                        } else {
-                            statement.setDouble(1, newBalance);
-                            statement.setInt(2, rs.getInt("id"));
-                            statement.setString(3, UserController.currentUser.getName());
-                            statement.execute();
-                            UserController.currentUser.setBalance(newBalance);
-                            UserController.currentUser.setId(id);
-                            return true;
+                            case 2 -> exit(0);
                         }
                     } else{
-                      System.out.println("Too young for this film dude");
-                  }
+                    statement.setDouble(1, newBalance);
+                    statement.setInt(2, rs.getInt("id"));
+                    statement.setString(3, UserController.currentUser.getName());
+                    statement.execute();
+                    UserController.currentUser.setBalance(newBalance);
+                    UserController.currentUser.setId(id);
+                    return true;
+                    }
                 }
+                else{
+                      System.out.println("You are too young for this film.");
+                  }
                 } catch (SQLException e){
                     e.printStackTrace();
                 }
             }
-
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -91,25 +94,17 @@ public class ClientRepository implements IClientRepository {
 
                       if(UserController.currentUser.getAge() >=18)  {
                             newBalance = UserController.currentUser.getBalance() + rs.getDouble("price");
-                            statement.setDouble(1, newBalance);
-                            statement.setInt(2, 0);
-                            statement.setString(3, UserController.currentUser.getName());
-                            statement.execute();
-                            UserController.currentUser.setBalance(newBalance);
-                            UserController.currentUser.setId(0);
-                            return true;
                         }
                       else {
                           newBalance = UserController.currentUser.getBalance() + rs.getDouble("children");
-                          statement.setDouble(1, newBalance);
-                          statement.setInt(2, 0);
-                          statement.setString(3, UserController.currentUser.getName());
-                          statement.execute();
-                          UserController.currentUser.setBalance(newBalance);
-                          UserController.currentUser.setId(0);
-                          return true;
                       }
-
+                        statement.setDouble(1, newBalance);
+                        statement.setInt(2, 0);
+                        statement.setString(3, UserController.currentUser.getName());
+                        statement.execute();
+                        UserController.currentUser.setBalance(newBalance);
+                        UserController.currentUser.setId(0);
+                        return true;
                     }
                 } catch (SQLException e){
                     e.printStackTrace();
@@ -135,7 +130,7 @@ public class ClientRepository implements IClientRepository {
         try{
            con = db.getConnection();
            Statement stt = con.createStatement();
-           ResultSet rss = stt.executeQuery("SELECT  * FROM movies");
+           ResultSet rss = stt.executeQuery("SELECT * FROM movies");
            while( rss.next()){
                if(UserController.currentUser.getId() == rss.getInt("id")){
                    System.out.println(" name = " + UserController.currentUser.getName() +" balance = "+ UserController.currentUser.getBalance() + " ticket = "+rss.getString("movie"));
@@ -159,7 +154,7 @@ public class ClientRepository implements IClientRepository {
         Connection con = null;
         double newBalance = 0;
         try{
-            System.out.println("Input additional balance");
+            System.out.println("Please, input additional balance:");
             newBalance = in.nextDouble();
             con = db.getConnection();
 
@@ -178,8 +173,30 @@ public class ClientRepository implements IClientRepository {
                 throwables.printStackTrace();
             }
         }
-
     }
+    public boolean idExits(int id){
+        Connection con = null;
+        try{
+            con = db.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM movies");
+
+            while (rs.next()){
+                if(rs.getInt("id") == id){
+                    return true;
+                }
+            }
 
 
+        }catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

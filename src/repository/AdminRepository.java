@@ -77,9 +77,9 @@ public class AdminRepository implements IMovieRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            System.out.println("Please input new price");
+            System.out.println("Please, input new price: ");
             double neww = in.nextDouble();
-            System.out.println("Please input new price for children");
+            System.out.println("Please, input new price for children: ");
             double children = in.nextDouble();
             String sql = " UPDATE movies SET price = (?),children = (?) WHERE id = (?) ";
             PreparedStatement st = con.prepareStatement(sql);
@@ -149,6 +149,30 @@ public class AdminRepository implements IMovieRepository {
             throwables.printStackTrace();
         }
     }
+        return false;
+    }
+    public boolean UserExist(int id){
+        Connection con = null;
+        try{
+            con = db.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM movie_users");
+            while (rs.next()){
+                if(rs.getInt("id") == id){
+                    return true;
+                }
+            }
+
+
+        }catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return false;
     }
 

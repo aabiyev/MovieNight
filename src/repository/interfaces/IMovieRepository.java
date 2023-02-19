@@ -9,4 +9,5 @@ public interface IMovieRepository {
     boolean UpdateMovie(int id);
     boolean DeleteMovie(int id);
     boolean DeleteUser(int id);
+    boolean UserExist(int id);
 }

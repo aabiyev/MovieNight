@@ -1,9 +1,9 @@
+
 import controller.AdminController;
 import controller.ClientController;
 import controller.UserController;
 import data.PostgresDB;
 import data.interfaces.IDB;
-import main.MyApplication;
 import repository.AdminRepository;
 import repository.ClientRepository;
 import repository.UserRepository;

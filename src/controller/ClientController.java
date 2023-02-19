@@ -9,14 +9,17 @@ public class ClientController{
     }
     public String buyTicket(int movieId){
         boolean buy = rep.buyTicket(movieId);
-        return (buy ? "Successfully bought ticket" : "Buying is failed");
+        return (buy ? "Successfully bought ticket!" : "Buying is failed.");
     }
     public String returnTicket(){
         boolean retrn = rep.returnTicket();
-        return (retrn ? "Ticked returned" : "Returning is failed !");
+        return (retrn ? "Ticked returned!" : "Returning is failed.");
     }
     public void Myaccount(){
         rep.MyAccount();
+    }
+    public boolean idExist(int id){
+        return rep.idExits(id);
     }
 
 }

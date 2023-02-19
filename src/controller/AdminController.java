@@ -13,15 +13,15 @@ public class AdminController {
     }
     public String createMovie(Movie movie){
         boolean created = repo.createMovie(movie);
-        return (created ? "Movie successfully created " : "Movie creation was failed");
+        return (created ? "Movie successfully created! " : "Movie creation was failed.");
     }
     public String UpdateMovie(int id){
         boolean created = repo.UpdateMovie(id);
-        return (created ? "Movie which id is " +id +" was successfully updated " : "Movie update was failed");
+        return (created ? "Movie which id is: " +id +" was successfully updated! " : "Movie update was failed.");
     }
     public String DeleteMovie(int id){
         boolean created = repo.DeleteMovie(id);
-        return (created ? "Movie which id is " +id +" was successfully deleted " : "Movie delete was failed");
+        return (created ? "Movie which id is: " +id +" was successfully deleted! " : "Movie delete was failed.");
     }
     public List<Movie> allMovie(){
         return repo.allMovie();
@@ -29,6 +29,9 @@ public class AdminController {
     public String DeleteUsers(int id){
         boolean deleted = repo.DeleteUser(id);
         UserController.currentUser = null;
-        return (deleted ? "User deleted" : "Something went wrong");
+        return (deleted ? "User deleted!" : "Something went wrong...");
+    }
+    public boolean UserExist(int id){
+        return repo.UserExist(id);
     }
 }

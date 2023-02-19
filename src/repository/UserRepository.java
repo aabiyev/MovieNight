@@ -22,15 +22,15 @@ public class UserRepository implements IUserRepository {
         boolean created = false;
         while (true) {
             if (role.equalsIgnoreCase("admin")) {
-                System.out.println("Please enter secret word");
+                System.out.println("Please, enter secret word: ");
                 String secret = in.next();
-                if (secret.equalsIgnoreCase("NurtasNadirov")) {
+                if (secret.equalsIgnoreCase("AskarKhaimuldin")) {
                     create(users, "admin");
                     created = true;
                     break;
                 } else {
                     System.out.println("""
-                            Secret word is incorrect
+                            Secret word is incorrect!
                             1 Try again
                             2 Go as a client
                             0 Exit
@@ -160,7 +160,6 @@ public class UserRepository implements IUserRepository {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
         }
     }
 }
