@@ -1,4 +1,3 @@
-
 import controller.AdminController;
 import controller.ClientController;
 import controller.UserController;
@@ -10,7 +9,6 @@ import repository.UserRepository;
 import repository.interfaces.IClientRepository;
 import repository.interfaces.IMovieRepository;
 import repository.interfaces.IUserRepository;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         IDB db = new PostgresDB();

@@ -1,16 +1,11 @@
-
 import java.util.Objects;
 import java.util.Scanner;
-
 import Exeptions.IncorrectPassword;
 import controller.AdminController;
 import controller.ClientController;
 import controller.UserController;
 import entities.Movie;
-
 import static java.lang.System.exit;
-
-
 public class MyApplication {
     private final UserController controller;
     private final AdminController adminController;
