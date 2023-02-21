@@ -25,7 +25,7 @@ public class UserRepository implements IUserRepository {
             if (role.equalsIgnoreCase("admin")) {
                 System.out.println("Please, enter secret word: ");
                 String secret = in.next();
-                if (secret.equalsIgnoreCase("AskarKhaimuldin")) {
+                if (secret.equalsIgnoreCase("KhaimuldinsBEST")) {
                     create(users, "admin");
                     created = true;
                     break;
@@ -191,4 +191,5 @@ public class UserRepository implements IUserRepository {
             }
         }
     }
+
 }

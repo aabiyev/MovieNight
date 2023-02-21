@@ -45,9 +45,9 @@ public class MyApplication {
         }
     }
     public void SignIn(){
-        System.out.println("Please, input your username");
+        System.out.println("Please, input your username:");
         String name = scanner.next();
-        System.out.println("Please, input your password");
+        System.out.println("Please, input your password:");
         String pass = scanner.next();
         boolean exist = controller.SignIn(name,pass);
         if(exist){
@@ -67,7 +67,7 @@ public class MyApplication {
     public void getAllUsersMenu() throws Exception {
         String response = controller.getAllUsers();
         if(response == null){
-            System.out.println("There is no accounts, create new! ");
+            System.out.println("There is no accounts, create new!");
             createUserMenu();
         }
         else {
@@ -78,25 +78,29 @@ public class MyApplication {
 
     public void createUserMenu() throws Exception {
         String response = null;
-        System.out.println("Please, enter your name");
+        System.out.println("Please, enter your name:");
         String name = scanner.next();
-        System.out.println("Please, enter your password");
+        if(controller.UserExist(name)){
+            System.out.println("You cannot create an account, because we have same account. Try again!re eis");
+            exit(0);
+        }
+        System.out.println("Please, enter your password: ");
         String password = scanner.next();
         isRightPassword(password);
-        System.out.println("Please, enter your role admin/client");
+        System.out.println("Please, enter your role admin/client: ");
         String choice = scanner.next();
-        if(choice.equalsIgnoreCase("admin")){
+        if (choice.equalsIgnoreCase("admin")) {
             response = controller.createUsers(name, password, choice);
             forAdmin();
         } else if (choice.equalsIgnoreCase("client")) {
-            System.out.println("Please, input your balance");
+            System.out.println("Please, input your balance: ");
             double balance = scanner.nextDouble();
-            System.out.println("Please, input your age");
+            System.out.println("Please, input your age: ");
             int age = scanner.nextInt();
-            response = controller.createUsers(name, password, choice, balance,age);
+            response = controller.createUsers(name, password, choice, balance, age);
             forClient();
-        }else {
-            System.out.println("Not correct role, please try again");
+        } else {
+            System.out.println("Not correct role, please try again!");
             createUserMenu();
         }
         System.out.println(response);
@@ -321,7 +325,7 @@ public class MyApplication {
     }
     public void returnTicket(){
         if(UserController.currentUser.getId() == 0){
-            System.out.println("You don't have ticket! ");
+            System.out.println("You don't have ticket!");
         }
         else
         {
@@ -381,7 +385,7 @@ public class MyApplication {
             }
         }
         if(n>0 && n<8){
-            throw new IncorrectPassword("Your password should contain at least 8 digits! ");
+            throw new IncorrectPassword("Your password should contain at least 8 digits!");
         }
         if(n != cnt){
             throw new IncorrectPassword("Your password should contain only numbers and character!");
