@@ -40,4 +40,7 @@ public class UserController {
         List<Users> users1 = repo.getAllUsers();
         return users1.toString();
     }
+    public boolean UserExist(String name){
+        return repo.exceptUser(name);
+    }
 }

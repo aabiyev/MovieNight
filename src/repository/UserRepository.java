@@ -6,6 +6,7 @@ import repository.interfaces.IUserRepository;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -135,6 +136,34 @@ public class UserRepository implements IUserRepository {
         }
         return null;
     }
+
+    @Override
+    public boolean exceptUser(String name) {
+        Connection con = null;
+        try{
+            con = db.getConnection();
+            Statement st  = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT  * FROM movie_users");
+            while(rs.next()){
+                if(Objects.equals(name, rs.getString("name"))){
+                    return true;
+                }
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+        return false;
+    }
+
     public void create(Users users,String role){
         Connection con = null;
         String sql;

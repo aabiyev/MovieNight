@@ -7,6 +7,7 @@ public class Users {
     private String role;
     private int age;
     private double balance = 0;
+    private int Item_id = 0;
     public Users(String name,String password,String role)  {
         setName(name);
         setPassword(password);
@@ -69,6 +70,14 @@ public class Users {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getItem_id() {
+        return Item_id;
+    }
+
+    public void setItem_id(int item_id) {
+        Item_id = item_id;
     }
 
     @Override

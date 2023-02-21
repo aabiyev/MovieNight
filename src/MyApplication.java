@@ -1,9 +1,11 @@
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import Exeptions.IncorrectPassword;
 import controller.AdminController;
 import controller.ClientController;
 import controller.UserController;
+import entities.Items;
 import entities.Movie;
 import static java.lang.System.exit;
 public class MyApplication {
@@ -106,10 +108,14 @@ public class MyApplication {
                 1. Create movie
                 2. Update movie
                 3. Delete movie
-                4. Log out from my account
-                5. All movie
-                6. All users
-                7. Delete the user's account
+                4. All movie
+                5. All users
+                6. Create item
+                7. Update item
+                8. Delete item
+                9. All item
+                10. Delete the user's account
+                11. Log out from my account
                 0. Exit
                 Enter option(1-7)""");
         try {
@@ -118,10 +124,14 @@ public class MyApplication {
                 case 1 -> createMovie();
                 case 2 -> updateMovie();
                 case 3 -> deleteMovie();
-                case 4 -> logOut();
-                case 5 -> AllMovie();
-                case 6 -> AllUsers();
-                case 7 -> DeleteUser();
+                case 4 -> AllMovie();
+                case 5 -> AllUsers();
+                case 6 -> CreateItem();
+                case 7 -> UpdateItem();
+                case 8 -> DeleteItem();
+                case 9 -> AllItem();
+                case 10 -> DeleteUser();
+                case 11 -> logOut();
                 default -> exit(0);
             }
 
@@ -175,7 +185,7 @@ public class MyApplication {
         forAdmin();
     }
     public void AllMovie(){
-        System.out.println(adminController.allMovie());
+        System.out.println(Objects.requireNonNullElse(adminController.allMovie(), "There is no accounts!"));
         forAdmin();
     }
     public void AllUsers(){
@@ -199,6 +209,43 @@ public class MyApplication {
         }
         start();
     }
+    public void CreateItem(){
+        System.out.println("Please, input name: ");
+        String str = scanner.nextLine();
+        String name = scanner.nextLine();
+        System.out.println("Please, input price: ");
+        double price = scanner.nextDouble();
+        System.out.println(adminController.CreateItem(new Items(name,price)));
+        forAdmin();
+    }
+    public void UpdateItem(){
+        System.out.println("Please, input item's id which you want to update: ");
+        int id = scanner.nextInt();
+        if (adminController.ItemExist(id)){
+            System.out.println(adminController.UpdateItem(id));}
+        else{
+            System.out.println("There is no item in such id!");
+        }
+        forAdmin();
+    }
+    public void DeleteItem(){
+        System.out.println("Please, input id:");
+        int id = scanner.nextInt();
+        if(adminController.ItemExist(id)){
+            System.out.println(adminController.DeleteItems(id));
+        }
+        else System.out.println("There is no item in such id!");
+        forAdmin();
+    }
+    public void AllItem(){
+        if(adminController.AllItems().isEmpty()){
+            System.out.println("There is no item");;
+        }
+        else {
+            System.out.println(adminController.AllItems());
+        }
+        forAdmin();
+    }
     public void forClient(){
         System.out.println("""
                 ***********************************
@@ -206,22 +253,23 @@ public class MyApplication {
                 1. See all movie
                 2. Buy a ticket
                 3. Return the ticket
-                4. Log out from my account
-                5. My items
+                4. My items
+                5. Buy an item
                 6. Delete my account
+                7. Log out from my account
                 0. Exit
-                Enter option(1-6)""");
+                Enter option(1-8)""");
         int choice = scanner.nextInt();
         switch (choice){
             case 1 -> allMovie();
             case 2 -> buyTicket();
             case 3 -> returnTicket();
-            case 4 -> logOut();
-            case 5 -> MyAccount();
-            case 6 -> {
-                System.out.println(adminController.DeleteUsers(UserController.currentUser.getId()));
+            case 4 -> MyAccount();
+            case 5 -> buyItem();
+            case 6 -> {System.out.println(adminController.DeleteUsers(UserController.currentUser.getId()));
                 start();
             }
+            case 7 -> logOut();
             default -> exit(0);
         }
     }
@@ -278,6 +326,17 @@ public class MyApplication {
         else
         {
             System.out.println(clientController.returnTicket());
+        }
+        forClient();
+    }
+    public void buyItem(){
+        System.out.println("Input item's id");
+        int id = scanner.nextInt();
+        if(adminController.ItemExist(id)){
+            System.out.println(clientController.buyItem(id));
+        }
+        else{
+            System.out.println("There is no item in such id!");
         }
         forClient();
     }

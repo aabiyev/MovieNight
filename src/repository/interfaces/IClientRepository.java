@@ -6,4 +6,5 @@ public interface IClientRepository {
     void MyAccount();
     void incBalance();
     boolean idExits(int id);
+    boolean buyItem(int id);
 }

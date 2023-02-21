@@ -21,5 +21,8 @@ public class ClientController{
     public boolean idExist(int id){
         return rep.idExits(id);
     }
-
+    public String buyItem(int id){
+        boolean buy = rep.buyItem(id);
+        return (buy ? "Successfully bought item!" : "Buying is failed.");
+    }
 }
